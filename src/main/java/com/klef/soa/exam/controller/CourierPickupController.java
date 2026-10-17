@@ -43,12 +43,6 @@ public class CourierPickupController {
 		return ResponseEntity.ok(courier);
 	}
 	
-	@PutMapping("/update/{id}")
-	public ResponseEntity<CourierPickupResponse> updateCourier(@PathVariable Long id, @RequestBody CourierPickupRequest req) {
-		CourierPickupResponse courier = service.updateCourierPickup(id, req);
-		
-		return ResponseEntity.ok(courier);
-	}
 	
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<String> deleteCourier(@PathVariable Long id) {

@@ -39,22 +39,6 @@ public class CourierPickupServiceImpl implements CourierPickupService{
 		return mapToResponse(saved);
 	}
 
-	@Override
-	public CourierPickupResponse updateCourierPickup(Long id, CourierPickupRequest req) {
-		CourierPickupEntity exists = repo.findById(id).orElseThrow(() -> new RuntimeException("Not found."));
-		
-		CourierPickupEntity courier = CourierPickupEntity.builder()
-				.id(exists.getId())
-				.senderName(req.getSenderName())
-				.parcelWeightKg(req.getParcelWeightKg())
-				.pickupAddress(req.getPickupAddress())
-				.status(req.isStatus())
-				.build();
-		
-		CourierPickupEntity saved = repo.save(courier);
-		
-		return mapToResponse(saved);
-	}
 
 	@Override
 	public String deleteCourierPickup(Long id) {

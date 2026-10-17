@@ -10,7 +10,5 @@ public interface CourierPickupService {
 	
 	CourierPickupResponse saveCourierPickup(CourierPickupRequest req);
 	
-	CourierPickupResponse updateCourierPickup(Long id, CourierPickupRequest req);
-	
 	String deleteCourierPickup(Long id);
 }
