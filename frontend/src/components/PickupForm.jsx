@@ -51,7 +51,8 @@ export default function PickupForm({ record, busy, onSave, onCancel }) {
           <fieldset id="editor-fields" disabled={busy}>
             <div className="mb-3">
               <label className="form-label" htmlFor="sender">Sender name</label>
-              <input ref={senderRef} className="form-control" id="sender" name="senderName" placeholder="Your Name" autoComplete="name" required maxLength={100} pattern={'.*\\S.*'} title="Enter a name with at least one non-space character." value={values.senderName} onChange={change} />
+              <input ref={senderRef} className="form-control" id="sender" name="senderName" placeholder="Your Name" autoComplete="name" required maxLength={100} pattern="[A-Za-z ]*[A-Za-z][A-Za-z ]*" title="Enter a name using only letters and spaces. Numbers and symbols are not allowed." value={values.senderName} onChange={change} />
+              <div className="form-text">Letters and spaces only. No numbers or symbols.</div>
             </div>
             <div className="mb-3">
               <label className="form-label" htmlFor="address">Pickup address</label>

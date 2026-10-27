@@ -2,6 +2,7 @@ package com.klef.soa.docker.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,7 +31,7 @@ public class CourierPickupController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<CourierPickupResponse> addCourier(@RequestBody CourierPickupRequest req) {
+	public ResponseEntity<CourierPickupResponse> addCourier(@Valid @RequestBody CourierPickupRequest req) {
 		CourierPickupResponse courier = service.saveCourierPickup(req);
 		
 		return ResponseEntity.ok(courier);
@@ -52,7 +53,7 @@ public class CourierPickupController {
 	}
 
 	@PutMapping("/update/{id}")
-	public ResponseEntity<CourierPickupResponse> updatecourier(@PathVariable Long id, @RequestBody CourierPickupRequest req) {
+	public ResponseEntity<CourierPickupResponse> updatecourier(@PathVariable Long id, @Valid @RequestBody CourierPickupRequest req) {
 		CourierPickupResponse courier = service.updateCourierPickup(id, req);
 
 		return ResponseEntity.ok(courier);
