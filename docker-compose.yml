@@ -1,0 +1,56 @@
+name: courier-pickup
+
+services:
+  postgresdb:
+    image: postgres:17-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-exam_2400033066}
+      POSTGRES_USER: ${POSTGRES_USER:-courier}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-courier_local_password}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5433}:5432"
+    networks:
+      - springboot-postgres-net
+
+  backend:
+    image: ${BACKEND_IMAGE:-arpandutta030705/docker-backend-2400033066:latest}
+    container_name: docker-springboot
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      SERVER_PORT: 8081
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/${POSTGRES_DB:-exam_2400033066}
+      SPRING_DATASOURCE_USERNAME: ${POSTGRES_USER:-courier}
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:-courier_local_password}
+      EUREKA_CLIENT_ENABLED: "false"
+    ports:
+      - "127.0.0.1:${BACKEND_PORT:-2025}:8081"
+    depends_on:
+      - postgresdb
+    restart: on-failure
+    networks:
+      - springboot-postgres-net
+
+  frontend:
+    image: ${FRONTEND_IMAGE:-arpandutta030705/docker-frontend-2400033066:latest}
+    container_name: docker-react
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:${FRONTEND_PORT:-3000}:80"
+    depends_on:
+      - backend
+    restart: on-failure
+    networks:
+      - springboot-postgres-net
+
+volumes:
+  postgres_data:
+
+networks:
+  springboot-postgres-net:
